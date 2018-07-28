@@ -1,0 +1,46 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+// Define the main class for the application
+mainClassName = 'ch.so.agem.fila.App'
+
+sourceCompatibility = "1.8" 
+targetCompatibility = "1.8"
+
+ext {
+    slf4jVersion = '1.8.0-beta2'
+    geotoolsVersion = '19.2'
+}
+
+dependencies {
+    compile 'com.google.guava:guava:23.0'
+    compile("org.slf4j:slf4j-api:${slf4jVersion}")
+    compile("org.slf4j:slf4j-simple:${slf4jVersion}")
+    compile("org.geotools:gt-main:${geotoolsVersion}")
+    compile("org.geotools:gt-cql:${geotoolsVersion}")
+    compile("org.geotools:gt-graph:${geotoolsVersion}")
+    compile("org.geotools.jdbc:gt-jdbc-postgis:${geotoolsVersion}")    
+    testCompile 'junit:junit:4.12'
+}
+
+// In this section you declare where to find the dependencies of your project
+repositories {
+    maven {
+        url "http://download.java.net/maven/2"
+    }
+    maven {
+        url "http://download.osgeo.org/webdav/geotools/"
+    }
+    maven {
+        url "http://maven.geo-solutions.it"
+    }
+    maven {
+        url "http://repo.maven.apache.org/maven2"
+    }
+    maven {
+        url "http://repo.boundlessgeo.com/main"
+    }
+    jcenter()
+}
