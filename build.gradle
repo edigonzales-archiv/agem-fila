@@ -22,7 +22,9 @@ dependencies {
     compile("org.geotools:gt-cql:${geotoolsVersion}")
     compile("org.geotools:gt-graph:${geotoolsVersion}")
     compile("org.geotools:gt-shapefile:${geotoolsVersion}")
-    compile("org.geotools.jdbc:gt-jdbc-postgis:${geotoolsVersion}")    
+    compile("org.geotools.jdbc:gt-jdbc-postgis:${geotoolsVersion}")  
+    compile("commons-cli:commons-cli:1.4")
+      
     testCompile 'junit:junit:4.12'
 }
 
