@@ -11,6 +11,8 @@ import org.geotools.data.FeatureSource;
 import org.geotools.feature.FeatureCollection;
 import org.geotools.feature.FeatureIterator;
 import org.geotools.filter.text.cql2.CQL;
+import org.geotools.jdbc.JDBCDataStore;
+import org.geotools.jdbc.VirtualTable;
 import org.opengis.feature.Feature;
 import org.opengis.feature.GeometryAttribute;
 import org.opengis.filter.Filter;
@@ -29,8 +31,13 @@ public class RoadAxisService {
 	public List<LineSegment> getRoadAxisLineSegmentsByBfsNr(DefaultRepository dataStoreRepo, String bfsnr, boolean unique) throws Exception {
 		Map<LineSegment,LineSegment> segments = new HashMap<LineSegment,LineSegment>();
 		
-		DataStore dataStore = dataStoreRepo.dataStore("RoadAxis");
-		FeatureSource featureSource = dataStore.getFeatureSource("mopublic_strassenachse");
+		DataStore dataStore = dataStoreRepo.dataStore("PostGIS");
+		
+		String sql = "SELECT t_id, bfs_nr, geometrie FROM agi_mopublic_pub.mopublic_strassenachse";
+		VirtualTable vt = new VirtualTable("vt_mopublic_strassenachse", sql);
+		((JDBCDataStore) dataStore).createVirtualTable(vt);
+		
+		FeatureSource featureSource = dataStore.getFeatureSource("vt_mopublic_strassenachse");
 		Filter filter = CQL.toFilter("bfs_nr = " + bfsnr);
 		FeatureCollection fc = featureSource.getFeatures(filter);
 		
